@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assignment2:JavaScript Game or Application</title>
+        <meta charset="utf-8">
+        <meta name="description" content="JavaScript Game or Application">
+        <meta name="keywords" content="javascript">
+        <meta name="author" content="Wei-Yen">
+    </head>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Mansalva&display=swap');
+    html{
+        background-color: black; 
+        font-family: 'Roboto', sans-serif;
+    }
+    h1{
+        margin: 0;
+        padding:10px;
+        font-family: 'Mansalva', cursive;
+        font-size:60px;
+        color:#62BBB9
+    }
+    h2{
+        text-align: center;
+        margin:10px 0px 10px 0px;
+    }
+    h4{
+        font-family: 'Roboto', sans-serif;
+        color:white;
+        font-size:25px;
+        padding-left: 10px;
+    }
+    .wrapper{
+        width: 85%;
+        margin:0 auto;
+    }
+    header{
+        color:white;
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+        background-color: black;
+    }
+    main{
+        color:white;
+        display: flex;
+    }
+    .left{
+        margin-top:80px;
+        display:flex;
+        flex:1;
+        flex-direction: column;
+        margin-right:15px;
+    }
+    .right{
+        margin-top:20px;
+        flex:1;
+        width: 600px;
+        background-color:black;
+    }
+
+    video{
+        margin: 0 auto;
+        width: 800px;
+        border-radius: 30px;
+    }
+    .video_btn_set{
+        margin-top:10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .video_btn{
+        width:50px;
+        height:50px;
+        display:inline-block;
+        margin:0 10px 0;
+        cursor: pointer;
+    }
+    .video_btn:hover{
+        transform: scale(1.1,1.1);
+    }
+    #pause_btn{
+        display:none;
+    }
+    #answer{
+        width: 80%;
+        height: 55px;
+        border-radius: 30px;
+        background-image: linear-gradient(to right, #212D33, #7138C8,#9CF1F2);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        margin: 0 auto;
+        font-size: 15px;
+        font-size: 20px;
+    }
+    #subtitle{
+        width:800px;
+        height:80px;
+        font-size:20px;
+        text-align: center;
+        color:rgb(255,255,255);
+        background-image: linear-gradient(transparent,black);
+        margin:0 auto;
+        position:absolute;
+        top:550px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    .transcript{
+        overflow:scroll;
+        height: 640px;
+        display: inline-block;
+        line-height: 40px;
+        width: 100%;
+        color: white;
+        border-radius: 20px;
+    }
+    .paragraph{
+        display:flex;
+        margin-bottom: 5px;
+        align-items: center;
+        border-bottom: 1px solid white;
+    }
+    .para{
+        cursor: pointer;
+        margin-left:13px;
+        font-size: 18px;
+        line-height: 30px;
+        cursor: pointer;
+    }
+    .para:hover{
+        color:#62BBB9;
+    }
+    .practice{
+        margin:12px 10px 10px 10px;
+        text-decoration: none;
+        z-index: 1;
+        width: 30px;
+        height: 30px;
+        background-image:url('image/microphone.png');
+    }
+    .practice:hover{
+        background-image:url('image/microphone_hover.png');
+    }
+    footer{
+        width:85%;
+        background-color: #62BBB9;
+        height:60px;
+        position:absolute;
+        bottom:0;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        display:flex;
+        justify-content: stretch;
+        align-items: center;
+    }
+    .feedback{
+        flex: 1;
+        margin-left: 80px;
+        margin-right: 20px;
+        height:50px;
+        display: flex;
+        align-items: center;
+        border-radius: 40px;
+    }
+    .score{
+        flex: 1;
+        height:80px;
+        display: flex;
+        align-items: center;
+    }
+    #restart{
+        flex: 1;
+        margin-right: 20px;
+        border:none;
+        width: 20px;
+        text-align: center;
+        font-family: 'Mansalva', cursive;
+        color:white;
+        font-size:40px;
+        cursor: pointer;
+        display: none;
+    }
+    #restart:hover{
+        font:50px;
+        color:black;
+    }
+    span{
+        font-family: 'Mansalva', cursive;
+        color:#E71D36;
+        padding-left:10px;
+        font-size: 40px;
+    }
+    
+
+    </style>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>English Speaking Practice!</h1>
+            </header>
+            <main>
+                <div class="left">
+                    <video id="howToUseWish" src="video.mp4"></video>
+                    <div id="subtitle"></div>
+                    <div class="video_btn_set">
+                        <div  id="pre_btn" class="video_btn"><img src="image/previous.png"></div>
+                        <div  id="play_btn" class="video_btn"><img src="image/play.png"></div>
+                        <div  id="pause_btn" class="video_btn"><img src="image/pause.png"></div>
+                        <div  id="next_btn" class="video_btn"><img src="image/next.png"></div>
+                    </div>
+                    <div id="answer">What you say..</div>
+                </div>
+                <div class="right">
+                    <div class="transcript">
+                        <h2>Transcript</h2>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(0)" ></div>
+                            <div class="para" onclick="repeatPara(0)">Hi, everyone.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(1)"></div>
+                            <div class="para" onclick="repeatPara(1)">from BBC Learning English in London.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(2)"></div>
+                            <div class="para" onclick="repeatPara(2)">And today,</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(3)"></div>
+                            <div class="para" onclick="repeatPara(3)">I'm going to tell you what to say after the word wish.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(4)"></div>
+                            <div class="para" onclick="repeatPara(4)">When we're talking about wishes</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(5)"></div>
+                            <div class="para" onclick="repeatPara(5)">we're talking about situations that are imaginary</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(6)"></div>
+                            <div class="para" onclick="repeatPara(6)">unreal.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(7)"></div>
+                            <div class="para" onclick="repeatPara(7)">To show this, after saying 'I wish',</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(8)"></div>
+                            <div class="para" onclick="repeatPara(8)">we use the past to talk about the wish,</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(9)"></div>
+                            <div class="para" onclick="repeatPara(9)">which is in the present.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(10)"></div>
+                            <div class="para" onclick="repeatPara(10)">So, I could say:</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(11)"></div>
+                            <div class="para" onclick="repeatPara(11)">I wish I had a cup of tea.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(12)"></div>
+                            <div class="para" onclick="repeatPara(12)">thank you!</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(13)"></div>
+                            <div class="para" onclick="repeatPara(13)">Now, if we want to make a wish about the past,</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(14)"></div>
+                            <div class="para" onclick="repeatPara(14)">we need to use the 'past past'</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(15)"></div>
+                            <div class="para" onclick="repeatPara(15)">- or the past perfect.</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(16)"></div>
+                            <div class="para" onclick="repeatPara(16)">For example:</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(17)"></div>
+                            <div class="para" onclick="repeatPara(17)">I wish I had chosen</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(18)"></div>
+                            <div class="para" onclick="repeatPara(18)">a more formal shirt</div>
+                        </div>
+                        <div class="paragraph">
+                            <div class="practice" onclick="recording(19)"></div>
+                            <div class="para" onclick="repeatPara(19)">before I filmed this video today.</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <div class="feedback">
+                    <h4>Feedback:  </h4>
+                    <span id="speaking_feedback">Let's Practice!</span>
+                </div>
+                <div class="score">
+                    <h4>Score: </h4> 
+                    <span id="point">0</span>
+                </div>
+                <audio id="myAudio">
+                    <source src="win.mp3" type="audio/ogg">
+                    <source src="win.mp3" type="audio/mpeg">
+                </audio>
+                <div id="restart">Restart</div>
+            </footer>
+        </div><!--wrapper-->
+        <script>
+        
+        //variable
+        var vid=document.getElementById("howToUseWish");
+        var vidSubtitle=document.getElementById("subtitle");
+        var playBtn=document.getElementById("play_btn");
+        var pauseBtn=document.getElementById("pause_btn");
+        var previousBtn=document.getElementById("pre_btn")
+        var nextBtn=document.getElementById("next_btn");
+        var showAnswer=document.getElementById("answer");
+        var paraBtn=document.querySelectorAll(".para");
+        var practiceBtn=document.querySelectorAll(".practice");
+        var learnerAnswerDisplay=document.getElementById("answer");
+        var feedbackToLearner=document.getElementById("speaking_feedback");
+        var showPoint=document.getElementById("point");
+        var countPoint=0;
+        var audi=document.getElementById("myAudio");
+        var restartBtn=document.getElementById("restart");
+
+        //Array
+        var subtitleArray={
+            time:[
+                0, 0.9, 4.2, 4.8, 8.17,
+                10.8, 14.7, 15.4, 18.5, 21.8,
+                23.3, 25, 28.3, 31.2, 35.8,
+                38.9, 41.3, 42.5, 45.2, 47,
+                50
+            ],
+            text:[
+                "hi everyone",
+                "from BBC learning English in London",
+                "and today",
+                "I'm going to tell you what to say after the word wish",
+                "when we're talking about wishes",
+                "we're talking about situations that are imaginary",
+                "unreal",
+                "to show this after saying I wish",
+                "we use the past to talk about the wish",
+                "which is in the present",
+                "so I could say",
+                "I wish I had a cup of tea",
+                "thank you",
+                "now if we want to make a wish about the past",
+                "we need to use the past past",
+                "or the past perfect",
+                "for example",
+                "I wish I had chosen",
+                "a more formal shirt",
+                "before I filmed this video today video today",
+                ""
+            ]
+        }
+
+        //Play video
+        function playVid(){
+            vid.play();
+            playBtn.style.display="none";
+            pauseBtn.style.display="block";
+        }
+        
+        //Pause video
+        function pauseVid(){
+            vid.pause();
+            playBtn.style.display="block";
+            pauseBtn.style.display="none";
+        }
+ 
+        playBtn.addEventListener("click",playVid);
+        pauseBtn.addEventListener("click",pauseVid);
+
+        //previous sentence
+        function preSentence(){
+            if(vid.currenTime>0 && vid.currenTime<0.9){
+                vid.currentTime=0;
+                vid.play();
+            }else if(vid.currentTime>0.9 &&vid.currentTime<4.2){
+                vid.currentTime=0.9;
+                vid.play();
+            }else if(vid.currentTime>4.2 &&vid.currentTime<4.8){
+                vid.currentTime=4.2;
+                vid.play();
+            }else if(vid.currentTime>4.8 &&vid.currentTime<8.17){
+                vid.currentTime=4.8;
+                vid.play();
+            }else if(vid.currentTime>8.17 &&vid.currentTime<10.8){
+                vid.currentTime=8.17;
+                vid.play();
+            }else if(vid.currentTime>10.8 &&vid.currentTime<14.7){
+                vid.currentTime=10.8;
+                vid.play();
+            }else if(vid.currentTime>14.7 &&vid.currentTime<15.4){
+                vid.currentTime=14.7;
+                vid.play();
+            }else if(vid.currentTime>15.4 &&vid.currentTime<18.5){
+                vid.currentTime=15.4;
+                vid.play();
+            }else if(vid.currentTime>18.5 &&vid.currentTime<21.8){
+                vid.currentTime=18.5;
+                vid.play();
+            }else if(vid.currentTime>21.8 &&vid.currentTime<23.3){
+                vid.currentTime=21.8;
+                vid.play();
+            }else if(vid.currentTime>23.3 &&vid.currentTime<25){
+                vid.currentTime=23.3;
+                vid.play();
+            }else if(vid.currentTime>25 &&vid.currentTime<28.3){
+                vid.currentTime=25;
+                vid.play();
+            }else if(vid.currentTime>28.3 &&vid.currentTime<31.2){
+                vid.currentTime=28.3;
+                vid.play();
+            }else if(vid.currentTime>31.2 &&vid.currentTime<35.8){
+                vid.currentTime=31.2;
+                vid.play();
+            }else if(vid.currentTime>35.8 &&vid.currentTime<38.9){
+                vid.currentTime=35.8;
+                vid.play();
+            }else if(vid.currentTime>38.9 &&vid.currentTime<41.3){
+                vid.currentTime=38.9;
+                vid.play();
+            }else if(vid.currentTime>41.3 &&vid.currentTime<42.5){
+                vid.currentTime=41.3;
+                vid.play();
+            }else if(vid.currentTime>42.5 &&vid.currentTime<45.2){
+                vid.currentTime=42.5;
+                vid.play();
+            }else if(vid.currentTime>45.2 &&vid.currentTime<47){
+                vid.currentTime=45.2;
+                vid.play();
+            }else if(vid.currentTime>47 &&vid.currentTime<50){
+                vid.currentTime=47;
+                vid.play();
+            }else{
+                vid.currentTime=53.1;
+                playBtn.style.display="block";
+                pauseBtn.style.display="none";
+                vid.pause();
+            }
+        }
+        previousBtn.addEventListener("click",preSentence)
+
+        //next sentence
+        function nextSentence(){
+            if(vid.currenTime<0.9){
+                vid.currentTime=0.9;
+                vid.play();
+            }else if(vid.currentTime<4.2 && vid.currentTime>0.9){
+                vid.currentTime=4.2;
+                vid.play();
+            }else if(vid.currentTime<4.8 && vid.currentTime>4.2){
+                vid.currentTime=4.8;
+                vid.play();
+            }else if(vid.currentTime<8.17 && vid.currentTime>4.8){
+                vid.currentTime=8.17;
+                vid.play();
+            }else if(vid.currentTime<10.8 && vid.currentTime>8.17){
+                vid.currentTime=10.8;
+                vid.play();
+            }else if(vid.currentTime<14.7 && vid.currentTime>10.8){
+                vid.currentTime=14.7;
+                vid.play();
+            }else if(vid.currentTime<15.4 && vid.currentTime>14.7){
+                vid.currentTime=15.4;
+                vid.play();
+            }else if(vid.currentTime<18.5 && vid.currentTime>15.4){
+                vid.currentTime=18.5;
+                vid.play();
+            }else if(vid.currentTime<21.8 && vid.currentTime>18.5){
+                vid.currentTime=21.8;
+                vid.play();
+            }else if(vid.currentTime<23.3 && vid.currentTime>21.8){
+                vid.currentTime=23.3;
+                vid.play();
+            }else if(vid.currentTime<25 && vid.currentTime>23.3){
+                vid.currentTime=25;
+                vid.play();
+            }else if(vid.currentTime<28.3 && vid.currentTime>25){
+                vid.currentTime=28.3;
+                vid.play();
+            }else if(vid.currentTime<31.2 && vid.currentTime>28.3){
+                vid.currentTime=31.2;
+                vid.play();
+            }else if(vid.currentTime<35.8 && vid.currentTime>31.2){
+                vid.currentTime=35.8;
+                vid.play();
+            }else if(vid.currentTime<38.9 && vid.currentTime>35.8){
+                vid.currentTime=38.9;
+                vid.play();
+            }else if(vid.currentTime<41.3 && vid.currentTime>38.9){
+                vid.currentTime=41.3;
+                vid.play();
+            }else if(vid.currentTime<42.5 && vid.currentTime>41.3){
+                vid.currentTime=42.5;
+                vid.play();
+            }else if(vid.currentTime<45.2 && vid.currentTime>42.5){
+                vid.currentTime=45.2;
+                vid.play();
+            }else if(vid.currentTime<47 && vid.currentTime>42.5){
+                vid.currentTime=47;
+                vid.play();
+            }else if(vid.currentTime<50 && vid.currentTime>47){
+                vid.currentTime=50;
+                vid.play();
+            }else{
+                vid.currentTime=53.1;
+                playBtn.style.display="block";
+                pauseBtn.style.display="none";
+                vid.pause();
+            }
+        }
+        nextBtn.addEventListener("click",nextSentence);
+
+        //Display video subtitle
+        function updateSubtitle(){
+            console.log(vid.currentTime);
+            for(subtitleOrder=0;subtitleOrder<subtitleArray.time.length;subtitleOrder++){
+                if(vid.currentTime>subtitleArray.time[subtitleOrder]){
+                    vidSubtitle.innerHTML=subtitleArray.text[subtitleOrder];
+                }
+            }
+            if(vid.currentTime>53){
+                playBtn.style.display="block";
+                pauseBtn.style.display="none";
+                vid.pause();
+            }
+        }
+        vid.addEventListener("timeupdate",updateSubtitle);
+        
+        //Click transcript and repeat video
+        function repeatPara(chosenPara){
+        vid.currentTime=subtitleArray.time[chosenPara];
+        playBtn.style.display="none";
+        pauseBtn.style.display="block";
+        vid.play();
+        }
+
+        //webspeech api
+        var recognition = new webkitSpeechRecognition();
+
+        function somethingWrong(){
+            feedbackToLearner.innerHTML=("Something Wrong!");
+            practiceBtn[0].style.backgroundImage="url('image/microphone.png')"
+        }
+
+        //evaluate learner answer
+        function heardFromLearner(event){
+            var learnerAnswer=event.results[0][0].transcript;
+            console.log(learnerAnswer);
+            learnerAnswerDisplay.innerHTML=learnerAnswer;
+            if(subtitleArray.text[pickPara]==learnerAnswer){
+                feedbackToLearner.innerHTML="Well down!"
+                practiceBtn[pickPara].style.backgroundImage="url('image/complete.png')"
+                console.log("well down!");
+                countPoint=countPoint+5;
+                showPoint.innerHTML=countPoint;
+
+            }else{
+                feedbackToLearner.innerHTML="Try again!"
+                practiceBtn[pickPara].style.backgroundImage="url('image/microphone.png')"
+                console.log("try again");
+            }
+            if(countPoint>=4){
+                restartBtn.style.display="block";
+            }
+            if(countPoint==100){
+                audi.play();
+                feedbackToLearner.innerHTML="You finished!" ;
+            }
+        }
+        recognition.lang = 'en-US';
+        recognition.addEventListener("result",heardFromLearner);
+        recognition.addEventListener("error",somethingWrong);
+
+        var pickPara=0;
+        function recording(paraLearnPicked){
+            pickPara=paraLearnPicked;
+            practiceBtn[paraLearnPicked].style.backgroundImage="url('image/recording.png')";
+            recognition.start();
+        }
+
+        //Restart
+        function playAgain(){
+            for(reset=0;reset<20;reset++){
+                practiceBtn[reset].style.backgroundImage="url('image/microphone.png')";
+                feedbackToLearner.innerHTML="Let's Practice";
+                learnerAnswerDisplay.innerHTML="What you say...";
+                countPoint=0;
+                showPoint.innerHTML=countPoint;
+            }
+        }
+        restartBtn.addEventListener("click",playAgain);
+
+        </script>
+    </body>
+</html>
